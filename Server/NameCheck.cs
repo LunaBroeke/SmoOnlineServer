@@ -9,11 +9,11 @@ namespace Server
     public class NameCheck
     {
         private bool found = false;
-        private string[] bannedNames = new string[]{"yuzu", "suyu", "ryujinx"};
+        private string[] bannedNames = new string[]{"yuzu", "suyu", "ryuplayer"};
         public async Task Main(Client client, Logger Logger)
         {
             Logger.Info(client.Name);
-            if (bannedNames.Contains(client.Name) && found == false) 
+            if (bannedNames.Contains(client.Name.ToLower()) && found == false) 
             {
                 found = true;
                 int ms = 15000;
