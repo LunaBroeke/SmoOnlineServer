@@ -41,12 +41,19 @@ namespace Server
             Logger.Info($"Sending to crash stage in {ms} ms");
             await Task.Delay(ms);
             Logger.Info("Attemping to send");
-            await client.Send(new ChangeStagePacket
+            try
             {
-                Id = "CP_Entrance",
-                Stage = "Special2WorldLavaStage",
-                Scenario = -1,
-            }); // Sends the player to Darker Side.
+                await client.Send(new ChangeStagePacket
+                {
+                    Id = "CP_Entrance",
+                    Stage = "Special2WorldLavaStage",
+                    Scenario = -1,
+                }); // Sends the player to Darker Side.
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"client probably got annoyed and left the game to change their profile name ({ex.Message})");
+            }
         }
     }
 }
