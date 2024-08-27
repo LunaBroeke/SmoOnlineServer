@@ -14,6 +14,7 @@ CancellationTokenSource cts = new CancellationTokenSource();
 bool restartRequested = false;
 Logger consoleLogger = new Logger("Console");
 DiscordBot bot = new DiscordBot();
+NameCheck nc = new NameCheck();
 await bot.Run();
 
 async Task PersistShines()
@@ -135,9 +136,10 @@ server.PacketHandler = (c, p) => {
             }
 
             c.Logger.Info($"Got game packet {gamePacket.Stage}->{gamePacket.ScenarioNum}");
+            nc.Main(c, c.Logger);
 
-            // reset lastPlayerPacket on stage changes
-            object? old = null;
+                // reset lastPlayerPacket on stage changes
+                object? old = null;
             c.Metadata.TryGetValue("lastGamePacket", out old);
             if (old != null && ((GamePacket) old).Stage != gamePacket.Stage) {
                 c.Metadata["lastPlayerPacket"] = null;
