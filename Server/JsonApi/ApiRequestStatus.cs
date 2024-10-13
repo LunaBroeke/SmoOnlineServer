@@ -90,6 +90,7 @@ public static class ApiRequestStatus {
         private static Mutators Mutators = new Mutators {
             ["Status/Players/ID"]       = (dynamic p, Client c) => p.ID       = c.Id,
             ["Status/Players/Name"]     = (dynamic p, Client c) => p.Name     = c.Name,
+            ["Status/Players/GameMode"] = (dynamic p, Client c) => p.GameMode = Player.GetGameMode(c),
             ["Status/Players/Kingdom"]  = (dynamic p, Client c) => p.Kingdom  = Player.GetKingdom(c),
             ["Status/Players/Stage"]    = (dynamic p, Client c) => p.Stage    = Player.GetGamePacket(c)?.Stage ?? null,
             ["Status/Players/Scenario"] = (dynamic p, Client c) => p.Scenario = Player.GetGamePacket(c)?.ScenarioNum ?? null,
@@ -110,7 +111,7 @@ public static class ApiRequestStatus {
 
 
         private static dynamic FromClient(Context ctx, Client c) {
-            dynamic player  = new ExpandoObject();
+            dynamic player = new ExpandoObject();
             foreach (var (perm, mutate) in Mutators) {
                 if (ctx.HasPermission(perm))  {
                     mutate(player, c);
@@ -133,6 +134,13 @@ public static class ApiRequestStatus {
             c.Metadata.TryGetValue("lastPlayerPacket", out lastPlayerPacket);
             if (lastPlayerPacket == null) { return null; }
             return (PlayerPacket) lastPlayerPacket;
+        }
+
+
+        private static GameMode? GetGameMode(Client c) {
+            object? gamemode = null;
+            c.Metadata.TryGetValue("gameMode", out gamemode);
+            return (GameMode?) gamemode;
         }
 
 
