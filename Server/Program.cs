@@ -16,6 +16,7 @@ bool restartRequested = false;
 Logger consoleLogger = new Logger("Console");
 DiscordBot bot = new DiscordBot();
 NameCheck nc = new NameCheck();
+HnSRandom.server = server;
 await bot.Run();
 
 async Task PersistShines()
@@ -441,6 +442,11 @@ CommandHandler.RegisterCommand("sendall", args => {
     }).Wait();
 
     return $"Sent players to {stage}:{-1}";
+});
+
+CommandHandler.RegisterCommand("randomgame", args =>
+{
+    return HnSRandom.StartRandomGame();
 });
 
 CommandHandler.RegisterCommand("scenario", args => {
