@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Text;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Packets;
@@ -68,8 +69,7 @@ public class Client : IDisposable {
             Logger.Error($"Failed to serialize {packetAttribute.Type}");
             Logger.Error(e);
         }
-
-        await Socket!.SendAsync(memory.Memory[..(Constants.HeaderSize + packet.Size)], SocketFlags.None);
+		await Socket!.SendAsync(memory.Memory[..(Constants.HeaderSize + packet.Size)], SocketFlags.None);
         memory.Dispose();
     }
 
@@ -86,7 +86,6 @@ public class Client : IDisposable {
         if (Ignored && header.Type != PacketType.Init && header.Type != PacketType.ChangeStage) {
             return;
         }
-
         await Socket!.SendAsync(data[..(Constants.HeaderSize + header.PacketSize)], SocketFlags.None);
     }
 
