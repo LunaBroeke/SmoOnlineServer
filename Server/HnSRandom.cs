@@ -27,6 +27,7 @@ namespace Server
 #pragma warning restore CS4014 
 			}
 			// Still needs logic for selecting a random seeker(s) (amount would be selectable by doing 'randomgame [int]') and then displaying the seekers names. I haven't seen a way to broadcast messages so my current concept is to have a fake player display the seekers names.
+			// Remember to add a debug command to: Save Player Locations, Test the Fake Player.
 			return $"Starting Random Game on {stage}";
 		}
 

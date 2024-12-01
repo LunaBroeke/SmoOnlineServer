@@ -63,7 +63,6 @@ async Task LoadShines()
 
 // Load shines table from file
 await LoadShines();
-consoleLogger.Error($"a");
 
 server.ClientJoined += (c, _) => {
     c.Metadata["shineSync"] = new ConcurrentBag<int>();
