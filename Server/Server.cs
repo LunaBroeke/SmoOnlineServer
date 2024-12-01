@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Text;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Packets;
@@ -27,7 +28,8 @@ public class Server {
         try {
             while (true) {
                 Socket socket = token.HasValue ? await serverSocket.AcceptAsync(token.Value) : await serverSocket.AcceptAsync();
-                socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, true);
+                
 
                 if (! Settings.Instance.JsonApi.Enabled) {
                     Logger.Warn($"Accepted connection for client {socket.RemoteEndPoint}");

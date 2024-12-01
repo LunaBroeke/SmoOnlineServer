@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Shared;
 
@@ -9,11 +10,11 @@ public class Logger {
 
     public string Name { get; set; }
 
-    public void Info(string text) => Handler?.Invoke(Name, "Info", text, ConsoleColor.White);
+    public void Info(string text, [CallerFilePath] string f = "", [CallerMemberName] string m = "", [CallerLineNumber] int l = 0) => Handler?.Invoke(Name, "Info", text+$"{m},{l}", ConsoleColor.White);
 
-    public void Warn(string text) => Handler?.Invoke(Name, "Warn", text, ConsoleColor.Yellow);
+    public void Warn(string text, [CallerFilePath] string f = "", [CallerMemberName] string m = "", [CallerLineNumber] int l = 0) => Handler?.Invoke(Name, "Warn", text + $"{m},{l}", ConsoleColor.Yellow);
 
-    public void Error(string text) => Handler?.Invoke(Name, "Error", text, ConsoleColor.Red);
+    public void Error(string text, [CallerFilePath] string f = "", [CallerMemberName] string m = "", [CallerLineNumber] int l = 0) => Handler?.Invoke(Name, $"Error", text+$"{f},{m},{l}", ConsoleColor.Red);
 
     public void Error(Exception error) => Error(error.ToString());
 
