@@ -17,13 +17,16 @@ namespace Server
 		private bool success = false;
 		public void CheckManager()
 		{
-			string result = CheckFirewall();
-			logger.Info(result);
-			Thread.Sleep(5000);
-			result = result.ToLower();
-			if (result.Contains("admin"))
+			if (settings.Firewall.FirewallReminder == true)
 			{
-				RestartWithAdmin();
+				string result = CheckFirewall();
+				logger.Info(result);
+				Thread.Sleep(5000);
+				result = result.ToLower();
+				if (result.Contains("admin"))
+				{
+					RestartWithAdmin();
+				}
 			}
 		}
 		public string CheckFirewall()
@@ -45,7 +48,7 @@ namespace Server
 						if (rule.Enabled == true)
 						{
 							success = true;
-							return $"We have already found a port open on {port} meaning that everything is going according to plan, please check if you have also opened the port on your router, if you're still facing issues refer to the #help channel in the CraftyBoss community server https://discord.gg/w3TnB899ww";
+							return $"We have already found a port open on {port} meaning that everything is going according to plan, please check if you have also opened the port on your router, if you're still facing issues refer to the #help channel in the CraftyBoss community server https://discord.gg/w3TnB899ww, To get rid of this message set the \"FirewallReminder\" in settings.json to false";
 						}
 						else
 						{
@@ -76,7 +79,7 @@ namespace Server
 
 					firewallPolicy.Rules.Add(newRule);
 					success = true;
-					return $"Firewall rule added successfully on port {port} with name {name}";
+					return $"Firewall rule added successfully on port {port} with name {name}, please check if you have also opened the port on your router, if you're still facing issues refer to the #help channel in the CraftyBoss community server https://discord.gg/w3TnB899ww";
 				}
 				else
 				{
