@@ -21,6 +21,8 @@ public class Settings {
             try {
                 Instance = JsonConvert.DeserializeObject<Settings>(text, new StringEnumConverter(new CamelCaseNamingStrategy())) ?? Instance;
                 Logger.Info("Loaded settings from settings.json");
+                if (Instance.StageSelection == null || Instance.StageSelection.Count < 1)
+                    Instance.StageSelection = StageSelectionTable.Preset();
             }
             catch (Exception e) {
                 Logger.Warn($"Failed to load settings.json: {e}");
@@ -44,6 +46,7 @@ public class Settings {
     public FlipTable Flip { get; set; } = new FlipTable();
     public ScenarioTable Scenario { get; set; } = new ScenarioTable();
     public BanListTable BanList { get; set; } = new BanListTable();
+    public List<StageSelectionTable> StageSelection { get; set; } = new List<StageSelectionTable>();
     public DiscordTable Discord { get; set; } = new DiscordTable();
     public ShineTable Shines { get; set; } = new ShineTable();
     public PersistShinesTable PersistShines { get; set; } = new PersistShinesTable();
@@ -66,6 +69,40 @@ public class Settings {
         public ISet<Guid> Players { get; set; } = new SortedSet<Guid>();
         public ISet<string> IpAddresses { get; set; } = new SortedSet<string>();
         public ISet<string> Stages { get; set; } = new SortedSet<string>();
+    }
+
+    public class StageSelectionTable
+    {
+		public string stageName { get; set; }
+        public bool enabled { get; set; } = true;
+        public StageSelectionTable(string name)
+        {
+            stageName = name;
+        }
+        public static List<StageSelectionTable> Preset() 
+        {
+            List<StageSelectionTable> list = new List<StageSelectionTable>
+            {
+                new StageSelectionTable("CapWorldHomeStage"),
+                new StageSelectionTable("WaterfallWorldHomeStage"),
+                new StageSelectionTable("SandWorldHomeStage"),
+                new StageSelectionTable("LakeWorldHomeStage"),
+                new StageSelectionTable("ForestWorldHomeStage"),
+                new StageSelectionTable("CloudWorldHomeStage") { enabled = false },
+                new StageSelectionTable("ClashWorldHomeStage"),
+                new StageSelectionTable("CityWorldHomeStage"),
+                new StageSelectionTable("SnowWorldHomeStage"),
+                new StageSelectionTable("SeaWorldHomeStage"),
+                new StageSelectionTable("LavaWorldHomeStage"),
+                new StageSelectionTable("BossRaidWorldHomeStage") { enabled = false },
+                new StageSelectionTable("SkyWorldHomeStage"),
+                new StageSelectionTable("MoonWorldHomeStage"),
+                new StageSelectionTable("PeachWorldHomeStage"),
+                new StageSelectionTable("Special1WorldHomeStage") { enabled = false },
+                new StageSelectionTable("Special2WorldHomeStage") { enabled = false },
+			};
+            return list;
+        }
     }
 
     public class FlipTable {

@@ -21,16 +21,17 @@ namespace Server
 
         public async Task SendToDarker(Client client, Logger Logger)
         {
+            string stageName = Settings.Instance.BannedName.StageToSend;
             int ms = 30000; // Wait time to ensure that the client is loaded in the stage before attempting to send.
             Logger.Info($"found banned name {client.Name}");
-            Logger.Info($"Sending to crash stage in {ms} ms");
+            Logger.Info($"Sending to {stageName} in {ms} ms");
             await Task.Delay(ms);
             Logger.Info("Attemping to send");
             try
             {
                 await client.Send(new ChangeStagePacket
                 {
-                    Stage = Settings.Instance.BannedName.StageToSend,
+                    Stage = stageName,
                     Scenario = -1,
                 }); // Sends the player to Darker Side.
             }
