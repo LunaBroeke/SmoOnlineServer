@@ -10,7 +10,7 @@ namespace Server
 	public static class HnSRandom
 	{
 		public static Server server;
-		public static List<string> selectedPlayers;
+		public static List<string> selectedPlayers = new List<string>();
 		/// <summary>
 		/// Function for private server hosts to start a random game of Hide & Seek
 		/// </summary>
@@ -26,7 +26,8 @@ namespace Server
 				return "Number is higher than the amount of players";
 			else if (num == server.Clients.Count)
 				return "Please have at least one hider available";
-			int spacesLeft = selectedPlayers.Count - server.Clients.Count; // checks how many players have currently been unselected.
+			int spacesLeft = server.Clients.Count - selectedPlayers.Count; // checks how many players have currently been unselected.
+			server.Logger.Warn(spacesLeft.ToString());
 			if (spacesLeft < num) // If spaces left is lower than the number of seekers wanted then the selectedPlayers list gets cleared
 				selectedPlayers.Clear();
 			List<string> players = new List<string>();

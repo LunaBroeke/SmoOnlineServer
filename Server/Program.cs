@@ -450,6 +450,10 @@ CommandHandler.RegisterCommand("randomgame", args =>
 	{ return optionUsage; }
 	return HnSRandom.StartRandomGame(args[0]);
 });
+CommandHandler.RegisterCommand("randomdebug", args =>
+{
+    return HnSRandom.DebugMessage();
+});
 
 CommandHandler.RegisterCommand("scenario", args => {
     const string optionUsage = "Valid options: merge [true/false]";
