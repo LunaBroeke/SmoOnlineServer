@@ -445,7 +445,10 @@ CommandHandler.RegisterCommand("sendall", args => {
 
 CommandHandler.RegisterCommand("randomgame", args =>
 {
-    return HnSRandom.StartRandomGame();
+	const string optionUsage = "Usage: randomgame <int>";
+	if (args.Length < 1)
+	{ return optionUsage; }
+	return HnSRandom.StartRandomGame(args[0]);
 });
 
 CommandHandler.RegisterCommand("scenario", args => {
