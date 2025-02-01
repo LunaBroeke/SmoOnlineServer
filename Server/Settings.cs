@@ -43,6 +43,7 @@ public class Settings {
     }
 
     public ServerTable Server { get; set; } = new ServerTable();
+    public LogListenerTable LogListener { get; set; } = new LogListenerTable();
     public FlipTable Flip { get; set; } = new FlipTable();
     public ScenarioTable Scenario { get; set; } = new ScenarioTable();
     public BanListTable BanList { get; set; } = new BanListTable();
@@ -58,6 +59,13 @@ public class Settings {
         public string Address { get; set; } = IPAddress.Any.ToString();
         public ushort Port { get; set; } = 1027;
         public ushort MaxPlayers { get; set; } = 8;
+    }
+
+    public class LogListenerTable
+    {
+        public bool Enabled = true;
+        public string Address { get; set; } = "127.0.0.1";
+        public ushort Port { get; set; } = 11027;
     }
 
     public class ScenarioTable {
