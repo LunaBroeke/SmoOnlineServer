@@ -17,7 +17,6 @@ Logger consoleLogger = new Logger("Console");
 DiscordBot bot = new DiscordBot();
 NameCheck nc = new NameCheck();
 HnSRandom.server = server;
-Thread firewall = new Thread(() => { FirewallCheck fw = new FirewallCheck(); fw.CheckManager(); }) { IsBackground = true}; firewall.Start();
 await bot.Run();
 
 async Task PersistShines()

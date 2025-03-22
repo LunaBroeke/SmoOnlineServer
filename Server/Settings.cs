@@ -52,7 +52,6 @@ public class Settings {
     public PersistShinesTable PersistShines { get; set; } = new PersistShinesTable();
     public BannedNameTable BannedName { get; set; } = new BannedNameTable();
     public JsonApiTable JsonApi { get; set; } = new JsonApiTable();
-    public FirewallTable Firewall { get; set; } = new FirewallTable();
 
     public class ServerTable {
         public string Address { get; set; } = IPAddress.Any.ToString();
@@ -139,10 +138,5 @@ public class Settings {
     {
         public bool Enabled { get; set; } = false;
         public Dictionary<string, SortedSet<string>> Tokens { get; set; } = new Dictionary<string, SortedSet<string>>();
-    }
-
-    public class FirewallTable
-    {
-        public bool FirewallReminder = true;
     }
 }
